@@ -8,6 +8,7 @@ const PLAYER_NAMES = [
     'big_sb',
     'good',
     'bad',
+    'roy'
 ];
 
 const players = _.map(PLAYER_NAMES, n => ({
