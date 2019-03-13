@@ -22,8 +22,8 @@ const results = _.map(players, player=> {
         let playerScore = 0;
         let foeScore = 0;
         _.times(TIMES, t => {
-            const r1 = player.fn(foeResults);
-            const r2 = foe.fn(playerResults);
+            const r1 = player.fn(foeResults, playerResults);
+            const r2 = foe.fn(playerResults, foeResults);
             playerResults.push(r1);
             foeResults.push(r2);
             if(r1) {
