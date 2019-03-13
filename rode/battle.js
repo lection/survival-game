@@ -16,6 +16,8 @@ const PLAYER_NAMES = [
     'big_sb',
     'good',
     'bad',
+    '_boyce',
+    '__boyce',
     'roy',
     'miki'
 ];
