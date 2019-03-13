@@ -19,7 +19,9 @@ const PLAYER_NAMES = [
     '_boyce',
     '__boyce',
     'roy',
-    'miki'
+    'miki',
+    'fan01',
+    'fan02',
 ];
 
 const players = _.map(PLAYER_NAMES, n => ({
@@ -78,26 +80,26 @@ const results = _.map(players, player=> {
     }
 });
 
-console.log(['name', 'my score', 'foe score'].join('\t'));
+console.log(['name', 'score', 'foe score'].join('\t'));
 console.log(
     _.chain(results).sortBy(p=>-p.playerAvg)
         .map(p=>[p.player.name, p.playerAvg.toFixed(2), p.foeAvg.toFixed(2)]
         .join('\t')).value().join('\n')
 );
 
-console.log('##############################################');
-console.log(['name', 'max score', 'foe score'].join('\t'));
-console.log(
-    _.chain(results).sortBy(p=>-p.playerMax)
-        .map(p=>[p.player.name, p.playerMax.toFixed(2), p.foeAvg.toFixed(2)]
-            .join('\t')).value().join('\n')
-);
-
-console.log('##############################################');
-_.each(results, result => {
-    console.log(`### ${result.player.name} ###`);
-    console.log(['name', 'avg score', 'foe score'].join('\t'));
-    _.each(result.results, r=>{
-        console.log([r.foe.name, r.playerScore, r.foeScore].join('\t'));
-    });
-});
+// console.log('##############################################');
+// console.log(['name', 'max score', 'foe score'].join('\t'));
+// console.log(
+//     _.chain(results).sortBy(p=>-p.playerMax)
+//         .map(p=>[p.player.name, p.playerMax.toFixed(2), p.foeAvg.toFixed(2)]
+//             .join('\t')).value().join('\n')
+// );
+//
+// console.log('##############################################');
+// _.each(results, result => {
+//     console.log(`### ${result.player.name} ###`);
+//     console.log(['name', 'avg score', 'foe score'].join('\t'));
+//     _.each(result.results, r=>{
+//         console.log([r.foe.name, r.playerScore, r.foeScore].join('\t'));
+//     });
+// });

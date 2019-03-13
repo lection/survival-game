@@ -6,5 +6,5 @@ module.exports = function (records, myRecords) {
         return true;
     }
     const cm = _.countBy(records, r=>r);
-    return cm['true'] > (cm['false']+5);
+    return cm['true'] > (cm['false']+2);
 };
