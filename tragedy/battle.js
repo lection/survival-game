@@ -4,15 +4,15 @@ const _ = require('lodash');
 const TIMES = 10000;
 
 const PLAYER_NAMES = [
-    'sample',
-    // 'sb',
-    'bob',
-    's1',
-    's2',
-    'bad2',
-    // 'bad',
-    'bad',
+    '_boyce',
+    '_miki',
+    'miki',
+    'boyce',
+    'roy',
     'fan01',
+    'bob',
+    // 'bad',
+    // 'sb',
 ];
 
 const players = _.map(PLAYER_NAMES, n => ({
@@ -20,11 +20,11 @@ const players = _.map(PLAYER_NAMES, n => ({
     fn: require('./player/' + n)
 }));
 
-const recordList = _.map(players, p=>({count: 0, name: p.name}));
+const recordList = [];
 const playerMap = {};
 
 let total = players.length * 10;
-let lastRecord = [];
+let lastRecord = _.map(players, p=>({count: 0, name: p.name}));
 _.times(TIMES, i => {
     const MAX_COUNT = parseInt((total*2)/players.length);
     lastRecord = _.map(players, player => {
@@ -45,21 +45,22 @@ _.times(TIMES, i => {
 
     if(total <= players.length) {
         console.log("都死了！", i);
-        printResult(total, playerMap);
+        printResult(total, playerMap, i);
         throw "";
     }
     recordList.push(lastRecord);
 });
 
-printResult(total, playerMap);
+printResult(total, playerMap, TIMES);
 
-function printResult(total, playerMap) {
+function printResult(total, playerMap, times) {
     console.log("草场:", total);
     console.log("总分:", _.sum(_.map(playerMap)));
     console.log("平均:", _.sum(_.map(playerMap))/players.length);
+    console.log("每轮平均:", (_.sum(_.map(playerMap))/players.length)/TIMES);
     const results = _.chain(playerMap).map((v,k)=>[k, v]).sortBy(arr=>-arr[1]).value();
     _.each(results, r=> {
-        console.log(r[0], r[1]);
+        console.log(r[0], r[1], r[1]/times);
     });
 }
 
