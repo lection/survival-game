@@ -4,10 +4,12 @@ const _ = require('lodash');
 const TIMES = 100;
 
 const PLAYER_NAMES = [
-    'sb',
+    'sample',
+    // 'sb',
     's1',
     's2',
-    'bad',
+    'bad2',
+    // 'bad',
 ];
 
 const players = _.map(PLAYER_NAMES, n => ({
@@ -15,18 +17,18 @@ const players = _.map(PLAYER_NAMES, n => ({
     fn: require('./player/' + n)
 }));
 
-const recordList = [];
+const recordList = _.map(players, p=>({count: 0, name: p.name}));
 const playerMap = {};
 
 let total = players.length * 10;
 let lastRecord = [];
 _.times(TIMES, i => {
+    const MAX_COUNT = parseInt((total*2)/players.length);
     lastRecord = _.map(players, player => {
+        const count = player.fn(total, _.clone(lastRecord), _.clone(playerMap));
         const record = {
             name: player.name,
-            count: Math.min(parseInt(
-                player.fn(total, _.clone(lastRecord), _.clone(playerMap))
-            ), parseInt((total*2)/players.length))
+            count: Math.max(Math.min(parseInt(count), MAX_COUNT), 1)
         };
 
         playerMap[player.name] = (playerMap[player.name] || 0) + record.count;
@@ -45,5 +47,5 @@ _.times(TIMES, i => {
     recordList.push(lastRecord);
 });
 
-console.log(playerMap);
+console.log(total, playerMap);
 
