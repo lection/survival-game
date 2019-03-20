@@ -11,7 +11,8 @@ const PLAYER_NAMES = [
     '_boyce',
     '__boyce',
     'roy',
-    'miki'
+    'miki',
+    '_miki',
 ];
 
 const players = _.map(PLAYER_NAMES, n => ({
