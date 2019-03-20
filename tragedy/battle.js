@@ -11,6 +11,7 @@ const PLAYER_NAMES = [
     'roy',
     'fan01',
     'bob',
+    'normal'
     // 'bad',
     // 'sb',
 ];
