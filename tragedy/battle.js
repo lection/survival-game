@@ -1,7 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
-const TIMES = 100;
+const TIMES = 10000;
 
 const PLAYER_NAMES = [
     'sample',
@@ -11,6 +11,8 @@ const PLAYER_NAMES = [
     's2',
     'bad2',
     // 'bad',
+    'bad',
+    'fan01',
 ];
 
 const players = _.map(PLAYER_NAMES, n => ({
