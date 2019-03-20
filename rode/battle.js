@@ -1,7 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
-const TIMES = 200;
+const TIMES = 5000;
 
 const PLAYER_NAMES = [
     'sb',
