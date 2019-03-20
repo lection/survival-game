@@ -6,6 +6,6 @@ module.exports = function (total, records) {
     const totalPeople = records.length;
     const avg =  Math.floor(total / (records.length)  * 2 / 5);
     const aboveAvgPeople = _.countBy(records, r => r <= avg);
-    if (aboveAvgPeople * 2 > aboveAvgPeople) return Math.floor(avg);
+    if (aboveAvgPeople * 2 > totalPeople) return Math.floor(avg);
     return Math.floor(avg) + 1;
 };
