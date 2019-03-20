@@ -3,13 +3,25 @@
 const _ = require('lodash');
 const TIMES = 5000;
 
+const GOOD = 3;
+const SUCCESS = 5;
+const SIMPLE = 0;
+const BAD = -1;
+
 const PLAYER_NAMES = [
     'sb',
+    'bob',
+    'beader',
+    'cc',
     'big_sb',
     'good',
     'bad',
+    '_boyce',
+    '__boyce',
     'roy',
-    'miki'
+    'miki',
+    'fan01',
+    'fan02',
 ];
 
 const players = _.map(PLAYER_NAMES, n => ({
@@ -24,25 +36,25 @@ const results = _.map(players, player=> {
         let playerScore = 0;
         let foeScore = 0;
         _.times(TIMES, t => {
-            const r1 = player.fn(foeResults);
-            const r2 = foe.fn(playerResults);
+            const r1 = player.fn(foeResults, playerResults);
+            const r2 = foe.fn(playerResults, foeResults);
             playerResults.push(r1);
             foeResults.push(r2);
             if(r1) {
                 if(r2) {
-                    playerScore += 3;
-                    foeScore += 3;
+                    playerScore += GOOD;
+                    foeScore += GOOD;
                 }else {
-                    playerScore += 0;
-                    foeScore += 5;
+                    playerScore += SIMPLE;
+                    foeScore += SUCCESS;
                 }
             }else {
                 if(r2) {
-                    playerScore += 5;
-                    foeScore += 0;
+                    playerScore += SUCCESS;
+                    foeScore += SIMPLE;
                 }else {
-                    playerScore += -1;
-                    foeScore += -1;
+                    playerScore += BAD;
+                    foeScore += BAD;
                 }
             }
         });
@@ -74,3 +86,20 @@ console.log(
         .map(p=>[p.player.name, p.playerAvg.toFixed(2), p.foeAvg.toFixed(2)]
         .join('\t')).value().join('\n')
 );
+
+console.log('##############################################');
+console.log(['name', 'max score', 'foe score'].join('\t'));
+console.log(
+    _.chain(results).sortBy(p=>-p.playerMax)
+        .map(p=>[p.player.name, p.playerMax.toFixed(2), p.foeAvg.toFixed(2)]
+            .join('\t')).value().join('\n')
+);
+
+console.log('##############################################');
+_.each(results, result => {
+    console.log(`### ${result.player.name} ###`);
+    console.log(['name', 'avg score', 'foe score'].join('\t'));
+    _.each(result.results, r=>{
+        console.log([r.foe.name, r.playerScore, r.foeScore].join('\t'));
+    });
+});
