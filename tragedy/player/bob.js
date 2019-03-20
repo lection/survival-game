@@ -1,9 +1,10 @@
 'use strict';
 
 module.exports = function (total, lastRecord) {
-    if((total/lastRecord.length) > 5) {
-        return 20;
+    const COUNT = (total/lastRecord.length);
+    if(COUNT > 3) {
+        return COUNT * 1.5;
     }else {
-        return parseInt((total/2)/lastRecord.length);
+        return COUNT * 2/3;
     }
 };

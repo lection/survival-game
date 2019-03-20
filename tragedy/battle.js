@@ -6,6 +6,7 @@ const TIMES = 100;
 const PLAYER_NAMES = [
     'sample',
     // 'sb',
+    'bob',
     's1',
     's2',
     'bad2',
@@ -41,11 +42,22 @@ _.times(TIMES, i => {
     }
 
     if(total <= players.length) {
-        console.log("都死了！", i, playerMap);
+        console.log("都死了！", i);
+        printResult(total, playerMap);
         throw "";
     }
     recordList.push(lastRecord);
 });
 
-console.log(total, playerMap);
+printResult(total, playerMap);
+
+function printResult(total, playerMap) {
+    console.log("草场:", total);
+    console.log("总分:", _.sum(_.map(playerMap)));
+    console.log("平均:", _.sum(_.map(playerMap))/players.length);
+    const results = _.chain(playerMap).map((v,k)=>[k, v]).sortBy(arr=>-arr[1]).value();
+    _.each(results, r=> {
+        console.log(r[0], r[1]);
+    });
+}
 
