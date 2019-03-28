@@ -5,7 +5,7 @@ const TIMES = 10000;
 
 const PLAYER_NAMES = [
     '_boyce',
-    '_miki',
+    // '_miki',
     'miki',
     'boyce',
     'roy',
