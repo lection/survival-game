@@ -20,6 +20,7 @@ const PLAYER_NAMES = [
     '__boyce',
     'roy',
     'miki',
+    '_miki',
     'fan01',
     'fan02',
 ];

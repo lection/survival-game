@@ -18,11 +18,6 @@
  * @returns {boolean}
  */
 module.exports = function (records) {
-    let length = records.length;
-    if (!length) return true;
-
-    let nihao = records.filter(it => it).length;
-    let nihao_probability = (nihao / length).toFixed(2);
-
-    return nihao_probability < (3/7).toFixed(2);
+    if (!records.length) return false;
+    return !records[records.length - 1];
 };
