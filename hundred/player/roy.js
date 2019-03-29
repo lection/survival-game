@@ -9,7 +9,6 @@ module.exports = function (maxInfo, secondInfo, total, playerMap, index) {
         if (el != 'roy')  max = Math.max(max, playerMap[el])
         if (playerMap[el]) count += 1
     })
-    console.log(max);
     if (count > 3) {
         return 1
     }

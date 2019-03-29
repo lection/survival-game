@@ -1,5 +1,6 @@
 'use strict';
+const _ = require('lodash');
 
 module.exports = function (maxInfo, secondInfo, total, playerMap, index) {
-    return 1;
+    return 99;
 };
