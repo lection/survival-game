@@ -5,9 +5,10 @@ const TIMES = 100;
 
 const PLAYER_NAMES = [
     'sb',
-    's1',
-    's2',
-    'bad',
+    // 's1',
+    // 's2',
+    // 'bad',
+    'roy'
 ];
 
 const players = _.map(PLAYER_NAMES, n => ({
