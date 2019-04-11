@@ -42,7 +42,7 @@ _.times(TIMES, i => {
         //     console.log(player.name, payScore);
         // }
 
-        if(payScore >= maxInfo.score) {
+        if(payScore > maxInfo.score) {
             secondInfo = maxInfo;
             maxInfo = {name: player.name, score: payScore};
         }
