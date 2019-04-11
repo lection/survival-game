@@ -4,10 +4,8 @@ const _ = require('lodash');
 const TIMES = 10000;
 
 const PLAYER_NAMES = [
-    // 's1',
-    // 's2',
-    // 's3',
     'roy',
+    'roy2',
     'miki',
     'boyce',
     'bob',
