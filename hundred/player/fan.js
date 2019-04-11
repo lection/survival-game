@@ -2,12 +2,10 @@
 const _ = require('lodash');
 
 module.exports = function (maxInfo, secondInfo, total, playerMap, index) {
-    if (maxInfo.score < 100) {
-        if (secondInfo.name === 'fan') {
-            return 100;
-        } else {
-            return 0;
-        }
+    if (secondInfo.name === 'fan') {
+        return Math.floor(maxInfo.score + 1);
+    } else {
+        if (secondInfo.score * 1.5 > maxInfo.score) return 1;
+        return Math.floor(secondInfo.score * 1.5);
     }
-    return 1;
 };
