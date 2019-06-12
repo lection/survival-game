@@ -78,5 +78,6 @@ function printResult() {
     });
 }
 
+console.log('###########################');
 console.log(playerMap);
 printResult();

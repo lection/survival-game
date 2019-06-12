@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Love Game</title>
+</head>
+<body>
+<div id="p1" style="width: 48%;height:300px;float: left;"></div>
+<div id="p2" style="width: 48%;height:300px;float: left;"></div>
+<div id="p3" style="width: 48%;height:300px;float: left;"></div>
+<div id="p4" style="width: 48%;height:300px;float: left;"></div>
+<button id="playBtn">Play</button>
+</body>
+</html>
+<script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/echarts/4.2.1-rc1/echarts.min.js"></script>
+<script src="https://cdn.staticfile.org/lodash.js/4.17.12-pre/lodash.min.js"></script>
+<script type="text/javascript">
+    const p1 = echarts.init(document.getElementById('p1'));
+    const p2 = echarts.init(document.getElementById('p2'));
+    const p3 = echarts.init(document.getElementById('p3'));
+    const p4 = echarts.init(document.getElementById('p4'));
+
+    const xAxis = [];
+
+    const maleScoreMap = {};
+    const maleRatioMap = {};
+    const femaleScoreMap = {};
+    const femaleRatioMap = {};
+
+    function updateDraw() {
+        draw(p1, maleScoreMap);
+        draw(p2, maleRatioMap);
+        draw(p3, femaleScoreMap);
+        draw(p4, femaleRatioMap);
+    }
+
+    function draw(dom, dataMap) {
+        dom.setOption({
+            tooltip : {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : xAxis
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : _.map(dataMap, (v, k)=>(
+                {
+                    name:k,
+                    type:'line',
+                    areaStyle: {},
+                    stack: '100%',
+                    data:v
+                }
+            ))
+        });
+    }
+
+    let maleAmount = {
+        good_boy: 1900,
+        bad_boy: 100,
+    };
+    let femaleAmount = {
+        careful_girl: 1000,
+        romantic_girl: 1000,
+    };
+    let playerAmount = _.assign({}, maleAmount, femaleAmount);
+
+    const playerCount = _.chain(playerAmount).map(v=>v).sum().value()/2;
+
+    function init() {
+        xAxis.push(0);
+        _.each(maleAmount, (v, k) => {
+            maleScoreMap[k] = [0];
+            maleRatioMap[k] = [v * 100/playerCount];
+        });
+        _.each(femaleAmount, (v, k) => {
+            femaleScoreMap[k] = [0];
+            femaleRatioMap[k] = [v * 100/playerCount];
+        });
+        updateDraw();
+    }
+
+    init();
+
+    function handleData(data, genderAmount, scoreMap, ratioMap) {
+        data = _.filter(data, ({name}) => genderAmount[name]);
+        const totalScore = _.chain(data).map('score').map(s=>s>0?s:0).sum().value();
+        _.each(data, ({name, score}) => {
+            scoreMap[name].push(score);
+            const ratio = totalScore == 0? 1/_.map(genderAmount).length : score/totalScore;
+            ratioMap[name].push(ratio > 0 ? ratio * 100 : 0);
+            genderAmount[name] = Math.max(playerCount * ratio, playerCount * 0.01);
+        });
+        console.log(scoreMap);
+        // console.log(ratioMap);
+    }
+    function play(cb) {
+        $.getJSON('/mock', playerAmount, json => {
+            const data = json.data;
+            xAxis.push(xAxis[xAxis.length - 1] + 1);
+            handleData(data, maleAmount, maleScoreMap, maleRatioMap);
+            handleData(data, femaleAmount, femaleScoreMap, femaleRatioMap);
+            _.assign(playerAmount, maleAmount, femaleAmount);
+            updateDraw();
+            cb && cb();
+        });
+    }
+
+    $('#playBtn').click(function () {
+        play();
+    });
+
+    function autoplay(times) {
+        let t = 0;
+        function f() {
+            t++;
+            if(t <= times) {
+                play(f);
+            }
+        }
+        f();
+    }
+
+</script>
