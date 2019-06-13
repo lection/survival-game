@@ -15,6 +15,5 @@ module.exports = function (total, lastRecords) {
     let lastAvg = Math.ceil(lastCount / players);
     let lastCan = Math.floor(lastTotal / players);
 
-
-    return lastCan - lastAvg + can * 1.5;
+    return lastCan - lastAvg + can + can * 0.5;
 };
