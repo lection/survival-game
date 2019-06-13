@@ -5,6 +5,6 @@
 //
 // return max_score >= 101 ? sec_score - 1 : max_score + 1;
 module.exports = function (maxInfo, secondInfo, total, playerMap, index) {
-    return 0;
+    return 0
 };
 
