@@ -54,7 +54,7 @@ function printResult(total, playerMap, times) {
     console.log("草场:", total);
     console.log("总分:", _.sum(_.map(playerMap)));
     console.log("平均:", _.sum(_.map(playerMap))/players.length);
-    console.log("每轮平均:", (_.sum(_.map(playerMap))/players.length)/TIMES);
+    console.log("每轮平均:", (_.sum(_.map(playerMap))/players.length)/times);
     const results = _.chain(playerMap).map((v,k)=>[k, v]).sortBy(arr=>-arr[1]).value();
     _.each(results, r=> {
         console.log(r[0], r[1], r[1]/times);
