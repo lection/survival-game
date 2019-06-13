@@ -3,5 +3,7 @@
 module.exports = function (total, lastRecords) {
     let players = lastRecords.length;
     if (players === 0) return 10;
-    return Math.floor(total / players) + 2;
+
+    let can = Math.floor(total / players);
+    return can + can * 0.5;
 };
