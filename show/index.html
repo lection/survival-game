@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Survival Game</title>
+</head>
+<body>
+    <div id="p1" style="width: 48%;height:400px;float: left;"></div>
+    <div id="p2" style="width: 48%;height:400px;float: left;"></div>
+    <button id="playBtn">Play</button>
+</body>
+</html>
+<script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/echarts/4.2.1-rc1/echarts.min.js"></script>
+<script src="https://cdn.staticfile.org/lodash.js/4.17.12-pre/lodash.min.js"></script>
+<script type="text/javascript">
+    const p1 = echarts.init(document.getElementById('p1'));
+    const p2 = echarts.init(document.getElementById('p2'));
+
+    const xAxis = [];
+
+    const scoreMap = {};
+    const ratioMap = {};
+
+    function updateDraw() {
+        draw(p1, scoreMap);
+        draw(p2, ratioMap);
+    }
+
+    function draw(dom, dataMap) {
+        dom.setOption({
+            tooltip : {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : xAxis
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : _.map(dataMap, (v, k)=>(
+                {
+                    name:k,
+                    type:'line',
+                    areaStyle: {},
+                    stack: '100%',
+                    data:v
+                }
+            ))
+        });
+    }
+
+    let playerAmount = {
+        good: 200,
+        bad: 200,
+        fan01: 200,
+        fan02: 200,
+        _boyce: 200,
+        miki: 200,
+        roy: 200,
+    };
+
+    const playerCount = _.chain(playerAmount).map(v=>v).sum().value();
+
+    function init() {
+        xAxis.push(0);
+        _.each(playerAmount, (v, k) => {
+            scoreMap[k] = [0];
+            ratioMap[k] = [v * 100/playerCount];
+        });
+        updateDraw();
+    }
+
+    init();
+
+    function play() {
+        $.getJSON('/mock', playerAmount, json => {
+            const data = json.data;
+            const totalScore = _.chain(data).map('score').sum().value();
+            _.each(data, ({name, score}) => {
+                const ratio = score/totalScore;
+                scoreMap[name].push(score);
+                ratioMap[name].push(ratio * 100);
+                playerAmount[name] = playerCount * ratio;
+            });
+            xAxis.push(xAxis[xAxis.length - 1] + 1);
+            console.log(scoreMap);
+            console.log(ratioMap);
+            updateDraw();
+        });
+    }
+
+    $('#playBtn').click(function () {
+        play();
+    });
+
+</script>

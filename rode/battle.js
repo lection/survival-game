@@ -1,3 +1,6 @@
+/*
+    已废弃
+ */
 'use strict';
 
 const _ = require('lodash');
@@ -9,19 +12,21 @@ const SIMPLE = 0;
 const BAD = -1;
 
 const PLAYER_NAMES = [
-    'sb',
+    // 'sb',
     'bob',
     'beader',
     'cc',
     'big_sb',
+    // 'big_sb_1',
     'good',
     'bad',
-    '_boyce',
-    '__boyce',
+    // '_boyce',
+    // '__boyce',
     'roy',
-    'miki',
+    'snow',
+    // 'miki',
     '_miki',
-    'fan01',
+    // 'fan01',
     'fan02',
 ];
 
