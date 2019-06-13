@@ -4,15 +4,12 @@ const _ = require('lodash');
 const TIMES = 10000;
 
 const PLAYER_NAMES = [
-    '_boyce',
-    // '_miki',
-    'miki',
     'boyce',
-    'roy',
+    '_boyce',
+    'miki',
+    '_miki',
     'fan01',
-    'bob',
-    // 'bad',
-    // 'sb',
+    'roy',
 ];
 
 const players = _.map(PLAYER_NAMES, n => ({
