@@ -1,12 +1,15 @@
 'use strict';
 
 const _ = require('lodash');
-const TIMES = 100;
+const TIMES = 10000;
 
 const PLAYER_NAMES = [
-    's1',
-    's2',
-    's3',
+    'roy',
+    'roy2',
+    'miki',
+    'boyce',
+    'bob',
+    'fan',
 ];
 
 let players = _.map(PLAYER_NAMES, n => ({
@@ -30,10 +33,16 @@ _.times(TIMES, i => {
             break;
         }
         const currentPlayerScore = playerMap[player.name];
-        let payScore = parseInt(player.fn(_.clone(maxInfo), _.clone(secondInfo), currentPlayerScore, _.clone(playerMap)) || 0, index);
+        let payScore = parseInt(player.fn(_.clone(maxInfo), _.clone(secondInfo), currentPlayerScore, _.clone(playerMap), index) || 0);
         payScore = Math.min(currentPlayerScore, payScore);
+        if(index == 0) {
+            payScore = Math.max(1, payScore);
+        }
+        // if(players[0].name == 'fan') {
+        //     console.log(player.name, payScore);
+        // }
 
-        if(payScore >= maxInfo.score) {
+        if(payScore > maxInfo.score) {
             secondInfo = maxInfo;
             maxInfo = {name: player.name, score: payScore};
         }
@@ -47,11 +56,19 @@ _.times(TIMES, i => {
     }else {
         // console.log('max', maxInfo);
         // console.log('second', secondInfo);
-        // console.log('list', index, players);
+        // console.log('list', index, players, playerMap);
     }
 
-    const last = players.pop();
-    players = [last, ...players];
+    // console.log('##########################');
+    players = _.filter(players, player => {
+        if(playerMap[player.name] > 0) {
+            return true;
+        }else {
+            console.log(player.name, '被淘汰', i);
+            return false;
+        }
+    });
+    players = _.shuffle(players);
 });
 
 function printResult() {
@@ -61,5 +78,6 @@ function printResult() {
     });
 }
 
+console.log('###########################');
 console.log(playerMap);
 printResult();

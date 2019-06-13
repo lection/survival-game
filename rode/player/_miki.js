@@ -18,6 +18,6 @@
  * @returns {boolean}
  */
 module.exports = function (records) {
-    if (!records.length) return false;
+    if (!records.length) return true;
     return !records[records.length - 1];
 };
